@@ -1,6 +1,6 @@
 # 2D Darcy Flow PDE Learning
 
-This project contains two neural network models designed to **learn the solution operator of the 2D Darcy flow problem**, where the goal is to predict the pressure field \( u(x) \) given the permeability field \( a(x) \), with the source term \( f(x) \) as a constant.
+This project contains two neural network models designed to **learn the solution operator of the 2D Darcy flow problem**, where the goal is to predict the pressure field (u(x)) given the permeability field (a(x)), with the source term (f(x)) as a constant.
 
 ---
 
@@ -8,15 +8,11 @@ This project contains two neural network models designed to **learn the solution
 
 The governing equation for the **2D Darcy Flow** problem on the unit box is:
 
-\[
--\nabla \cdot \left( a(x) \nabla u(x) \right) = f(x), \quad x \in (0,1)^2,
-\]
+![Darcy Flow PDE](https://latex.codecogs.com/png.latex?-\nabla%20\cdot%20(a(x)\nabla%20u(x))%20=%20f(x),\quad%20x\in(0,1)^2)
 
 subject to the **Dirichlet boundary condition**:
 
-\[
-u(x) = 0, \quad x \in \partial(0,1)^2.
-\]
+![Dirichlet BC](https://latex.codecogs.com/png.latex?u(x)%20=%200,\quad%20x\in\partial(0,1)^2)
 
 To approximate the solution operator of this PDE, two neural network architectures are implemented and compared:
 
@@ -31,13 +27,13 @@ Furthermore, the FNO is **resolution invariant**, meaning the trained model main
 ## ⚙️ Models
 
 ### 1. Convolutional Neural Network (CNN)
-The **CNN** treats the permeability field \( a(x, y) \) and pressure field \( u(x, y) \) as single-channel 2D images and uses standard convolutional layers for learning.
+The **CNN** treats the permeability field (a(x, y)) and pressure field (u(x, y)) as single-channel 2D images and uses standard convolutional layers for learning.
 
 **Key features:**
 - Encoder–bottleneck–decoder architecture  
 - Optimized with **Adam** optimizer  
 - Includes a **learning rate (LR) scheduler** for stability  
-- Learns a mapping from the input field \( a(x, y) \) to the output field \( u(x, y) \)
+- Learns a mapping from the input field (a(x, y)) to the output field (u(x, y))
 
 ---
 
@@ -45,10 +41,10 @@ The **CNN** treats the permeability field \( a(x, y) \) and pressure field \( u(
 The **FNO** leverages spectral (Fourier) transformations to learn mappings between function spaces directly.
 
 **Key features:**
-- Inputs: spatial coordinates \((x, y)\) and permeability field \(a(x, y)\) — total **3 input channels**  
+- Inputs: spatial coordinates ((x, y)) and permeability field (a(x, y)) — total **3 input channels**  
 - Data lifted to **32 channels** before passing through 2D Fourier layers  
 - Uses **first 12 positive and negative frequency modes** in spectral space  
-- Outputs a **single pressure field** \( u(x, y) \)  
+- Outputs a **single pressure field** (u(x, y))  
 - Optimized with **Adam** optimizer and **LR scheduler**  
 - **Resolution invariant** — the model generalizes across grid resolutions by operating in the frequency domain
 
